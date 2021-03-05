@@ -46,7 +46,6 @@ type
     Edit1: TEdit;
     dmtFuncionarioemail: TStringField;
     Panel5: TPanel;
-    chkFormatar: TCheckBox;
     sbtModelo1: TSpeedButton;
     sbtModelo2: TSpeedButton;
     sbtModelo3: TSpeedButton;
@@ -131,7 +130,6 @@ begin
           showmessage('Erro ao criar JSON!');
     end;
   end;
-  showmessage('Fim da operação.');
 end;
 
 procedure TfrmJson.sbtModelo2Click(Sender: TObject);
@@ -139,27 +137,26 @@ var
   jjsonTextW : TJsonTextWriter;
 
 begin
-//   if (chkFormatar.Checked = true) then
-//        jjsonTextW.Formatting := TJsonFormatting.Indented;
-//    else
-//        jjsonTextW.Formatting := TJsonFormatting.None;
+
     try
       jjsonTextW := TJsonTextWriter.Create(TStringWriter.Create,true);
       jjsonTextW.WriteStartArray;
       dmtFuncionario.First;
       while not dmtFuncionario.Eof do
       begin
-        jjsonTextW.WriteStartObject;
-        jjsonTextW.WritePropertyName('id');
-        jjsonTextW.WriteValue(dmtFuncionarioid.AsInteger);
-        jjsonTextW.WritePropertyName('nome');
-        jjsonTextW.WriteValue(dmtFuncionarionome.AsString);
-        jjsonTextW.WritePropertyName('salario');
-        jjsonTextW.WriteValue(dmtFuncionariosalario.AsFloat);
-        jjsonTextW.WritePropertyName('email');
-        jjsonTextW.WriteValue(dmtFuncionarioemail.AsString);
-        jjsonTextW.WriteEndObject;
-        dmtFuncionario.Next;
+            jjsonTextW.WriteStartObject;
+
+            jjsonTextW.WritePropertyName('id');
+            jjsonTextW.WriteValue(dmtFuncionarioid.AsInteger);
+            jjsonTextW.WritePropertyName('nome');
+            jjsonTextW.WriteValue(dmtFuncionarionome.AsString);
+            jjsonTextW.WritePropertyName('salario');
+            jjsonTextW.WriteValue(dmtFuncionariosalario.AsFloat);
+            jjsonTextW.WritePropertyName('email');
+            jjsonTextW.WriteValue(dmtFuncionarioemail.AsString);
+
+            jjsonTextW.WriteEndObject;
+            dmtFuncionario.Next;
       end;
       jjsonTextW.WriteEnd;
       mmJson.Text:=jjsonTextW.Writer.ToString;
@@ -172,8 +169,8 @@ procedure TfrmJson.SpeedButton1Click(Sender: TObject);
 begin
   try
       ForceDirectories('c:\temp');
-
       ufuncoes.salvaImagemDoForm('c:\temp\telaJSON.jpeg', Screen.ActiveForm);
+      // fazer -> salvar o arquivo JSON na pasta.
       ShowMessage('Arquivo(S) salvos na pasta c:\temp.  IMAGEM e JSON');
   except
       showmessage('É necessário a pasta criada em c:\temp. Onde salva os arquivos.');
@@ -185,10 +182,9 @@ var
   jjsonTextW : TJsonTextWriter;
 
 begin
-//   if (chkFormatar.Checked = true) then
-        jjsonTextW.Formatting := TJsonFormatting.Indented;
-//    else
-//        jjsonTextW.Formatting := TJsonFormatting.None;
+
+    // jjsonTextW.Formatting := TJsonFormatting.Indented;
+
     try
       jjsonTextW := TJsonTextWriter.Create(TStringWriter.Create,true);
 

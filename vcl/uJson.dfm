@@ -268,16 +268,6 @@ object frmJson: TfrmJson
         ParentFont = False
         OnClick = sbtModelo3Click
       end
-      object chkFormatar: TCheckBox
-        Left = 203
-        Top = 62
-        Width = 319
-        Height = 25
-        Caption = 'Formata'#231#227'o Padr'#227'o'
-        Checked = True
-        State = cbChecked
-        TabOrder = 0
-      end
     end
   end
   object Panel3: TPanel
