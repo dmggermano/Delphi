@@ -1,0 +1,14 @@
+unit ufuncoes;
+
+interface
+
+implementation
+
+/// <summary>
+///   pega o nome do usuario do windows
+/// </summary>
+function GetUsuarioSO : string;
+
+
+
+end.

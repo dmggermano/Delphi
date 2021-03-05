@@ -1,0 +1,89 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'Projeto Teste'
+  ClientHeight = 201
+  ClientWidth = 547
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIForm
+  Menu = MainMenu1
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 547
+    Height = 41
+    Align = alTop
+    Caption = 'Apli'#231#245'es para Exemplos'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clNavy
+    Font.Height = -29
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold, fsItalic]
+    ParentFont = False
+    TabOrder = 0
+    ExplicitLeft = 96
+    ExplicitTop = 8
+    ExplicitWidth = 185
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Top = 184
+    Width = 547
+    Height = 17
+    Align = alBottom
+    TabOrder = 1
+    object StatusBar1: TStatusBar
+      Left = 1
+      Top = 1
+      Width = 545
+      Height = 15
+      Align = alClient
+      Panels = <
+        item
+          Text = 'Data: '
+          Width = 130
+        end
+        item
+          Text = 'Pasta: '
+          Width = 200
+        end
+        item
+          Text = 'Mensagens: '
+          Width = 50
+        end>
+      ExplicitLeft = 32
+      ExplicitTop = 8
+      ExplicitWidth = 0
+      ExplicitHeight = 19
+    end
+  end
+  object MainMenu1: TMainMenu
+    Left = 464
+    object CadastroGeral1: TMenuItem
+      Caption = 'Telas de Exemplos'
+      object JSONteste1: TMenuItem
+        Caption = 'JSON exemplo'
+        Hint = 'aplicacao JSON exemplo'
+      end
+    end
+    object Sada1: TMenuItem
+      Caption = 'Sa'#237'da'
+      OnClick = Sada1Click
+    end
+  end
+  object tmrHora: TTimer
+    OnTimer = tmrHoraTimer
+    Left = 32
+    Top = 64
+  end
+end
