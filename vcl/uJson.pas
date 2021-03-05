@@ -182,8 +182,9 @@ var
   jjsonTextW : TJsonTextWriter;
 
 begin
-
+    // para a JSON ficar mais apresentável
     // jjsonTextW.Formatting := TJsonFormatting.Indented;
+    //
 
     try
       jjsonTextW := TJsonTextWriter.Create(TStringWriter.Create,true);
