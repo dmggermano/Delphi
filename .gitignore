@@ -1,0 +1,69 @@
+# Remova o comentário desses tipos se quiser um repositório ainda mais limpo. Mas tenha cuidado.
+# Pode causar danos a uma fonte de projeto existente. Leia as explicações abaixo.
+#
+# Arquivos de recursos são binários contendo manifesto, ícone do projeto e informações sobre a versão.
+# Eles não podem ser vistos como texto ou comparados por ferramentas diff. Considere substituí-los por arquivos .rc.
+# * .res
+#
+# Digite o arquivo de biblioteca (binário). Em versões antigas do Delphi, ele deve ser armazenado.
+# Desde o Delphi 2009, ele é produzido a partir de um arquivo .ridl e pode ser ignorado com segurança.
+# * .tlb
+#
+# Arquivo de portfólio de diagrama. Usado pelo editor de diagramas até Delphi 7.
+# Remova o comentário se não estiver usando diagramas ou use uma versão mais recente do Delphi.
+# * .ddp
+#
+# Arquivo Visual LiveBindings. Adicionado no Delphi XE2.
+# Remova o comentário se não estiver usando o LiveBindings Designer.
+# * .vlb
+#
+# Arquivo de configuração do Deployment Manager para seu projeto. Adicionado no Delphi XE2.
+# Remova o comentário se não for um desenvolvimento móvel e você não usar o recurso de depuração remota.
+# * .deployproj
+#
+# Arquivos de objeto C ++ produzidos quando a geração de arquivo de saída C / C ++ é configurada.
+# Remova o comentário se não estiver usando objetos externos (biblioteca zlib, por exemplo).
+# * .obj
+#
+
+# Binários gerados pelo compilador Delphi (seguro para deletar)
+* .exe
+* .dll
+* .bpl
+* .bpi
+* .dcp
+* .so
+* .apk
+* .drc
+* .map
+* .dres
+* .rsm
+* .tds
+* .dcu
+* .lib
+* .a
+* .o
+* .ocx
+
+# Delphi arquivos gerados automaticamente (informações duplicadas)
+* .cfg
+* .hpp
+* Resource.rc
+
+# Arquivos locais Delphi (informações específicas do usuário)
+* .local
+* .identcache
+* .projdata
+* .tvsconfig
+* .dsk
+
+# Histórico e backups Delphi
+__history /
+__recovery /
+* . ~ *
+
+# Arquivo de estatísticas do Castalia (já que o XE7 Castalia é distribuído com Delphi)
+* .stat
+
+# Boss dependency manager vendor folder https://github.com/HashLoad/boss
+módulos /
