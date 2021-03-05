@@ -31,7 +31,7 @@ object frmJson: TfrmJson
     Width = 939
     Height = 41
     Align = alTop
-    Caption = 'Brincando com JSON'
+    Caption = 'Brincando com JSON  - Delphi 10.3'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -27
@@ -195,13 +195,13 @@ object frmJson: TfrmJson
       end
       object edtSalario: TEdit
         Left = 60
-        Top = 84
+        Top = 83
         Width = 121
         Height = 24
         TabOrder = 2
         Text = '3000'
       end
-      object Edit1: TEdit
+      object edtEmail: TEdit
         Left = 60
         Top = 117
         Width = 173
@@ -267,6 +267,16 @@ object frmJson: TfrmJson
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = sbtModelo3Click
+      end
+      object chkFormatar: TCheckBox
+        Left = 200
+        Top = 60
+        Width = 280
+        Height = 27
+        Caption = 'Formatar JOSON'
+        Checked = True
+        State = cbChecked
+        TabOrder = 0
       end
     end
   end

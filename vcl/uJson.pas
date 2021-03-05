@@ -43,12 +43,13 @@ type
     edtSalario: TEdit;
     sbtIncluiReg: TSpeedButton;
     Label4: TLabel;
-    Edit1: TEdit;
+    edtEmail: TEdit;
     dmtFuncionarioemail: TStringField;
     Panel5: TPanel;
     sbtModelo1: TSpeedButton;
     sbtModelo2: TSpeedButton;
     sbtModelo3: TSpeedButton;
+    chkFormatar: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure sbtModelo1Click(Sender: TObject);
     procedure sbtIncluiRegClick(Sender: TObject);
@@ -70,7 +71,7 @@ type
       /// <summary>
       ///   inclui os dados na tabela
       /// </summary>
-      function incluiReg(tid,tnome,tsalario:string):boolean;
+      function incluiReg(tid,tnome,tsalario,temail:string):boolean;
     { Public declarations }
   end;
 
@@ -140,6 +141,11 @@ begin
 
     try
       jjsonTextW := TJsonTextWriter.Create(TStringWriter.Create,true);
+      // para a JSON ficar mais apresentável
+      if (chkFormatar.Checked) then
+          jjsonTextW.Formatting := TJsonFormatting(1)
+      else
+          jjsonTextW.Formatting := TJsonFormatting(0);
       jjsonTextW.WriteStartArray;
       dmtFuncionario.First;
       while not dmtFuncionario.Eof do
@@ -170,7 +176,7 @@ begin
   try
       ForceDirectories('c:\temp');
       ufuncoes.salvaImagemDoForm('c:\temp\telaJSON.jpeg', Screen.ActiveForm);
-      // fazer -> salvar o arquivo JSON na pasta.
+      salvaArquivoTXT('c:\temp\dadosJSON.json',mmJson.Text,'S');
       ShowMessage('Arquivo(S) salvos na pasta c:\temp.  IMAGEM e JSON');
   except
       showmessage('É necessário a pasta criada em c:\temp. Onde salva os arquivos.');
@@ -182,39 +188,48 @@ var
   jjsonTextW : TJsonTextWriter;
 
 begin
-    // para a JSON ficar mais apresentável
-    // jjsonTextW.Formatting := TJsonFormatting.Indented;
-    //
+
 
     try
-      jjsonTextW := TJsonTextWriter.Create(TStringWriter.Create,true);
+      try
+          jjsonTextW := TJsonTextWriter.Create(TStringWriter.Create,true);
+          jjsonTextW.WriteStartObject;
 
-      jjsonTextW.WriteStartObject;
-      jjsonTextW.WritePropertyName('funcionarios');
+          // para a JSON ficar mais apresentável
+          if (chkFormatar.Checked) then
+              jjsonTextW.Formatting := TJsonFormatting(1)
+          else
+              jjsonTextW.Formatting := TJsonFormatting(0);
 
-            jjsonTextW.WriteStartArray;
-            dmtFuncionario.First;
-            while not dmtFuncionario.Eof do
-            begin
 
-              jjsonTextW.WriteStartObject;
-                  jjsonTextW.WritePropertyName('id');
-                  jjsonTextW.WriteValue(dmtFuncionarioid.AsInteger);
-                  jjsonTextW.WritePropertyName('nome');
-                  jjsonTextW.WriteValue(dmtFuncionarionome.AsString);
-                  jjsonTextW.WritePropertyName('salario');
-                  jjsonTextW.WriteValue(dmtFuncionariosalario.AsFloat);
-                  jjsonTextW.WritePropertyName('email');
-                  jjsonTextW.WriteValue(dmtFuncionarioemail.AsString);
-              jjsonTextW.WriteEndObject;
+          jjsonTextW.WritePropertyName('funcionarios');
 
-              dmtFuncionario.Next;
-            end;
-            jjsonTextW.WriteEnd;
+                jjsonTextW.WriteStartArray;
+                dmtFuncionario.First;
+                while not dmtFuncionario.Eof do
+                begin
 
-      jjsonTextW.WriteEndObject;
+                  jjsonTextW.WriteStartObject;
+                      jjsonTextW.WritePropertyName('id');
+                      jjsonTextW.WriteValue(dmtFuncionarioid.AsInteger);
+                      jjsonTextW.WritePropertyName('nome');
+                      jjsonTextW.WriteValue(dmtFuncionarionome.AsString);
+                      jjsonTextW.WritePropertyName('salario');
+                      jjsonTextW.WriteValue(dmtFuncionariosalario.AsFloat);
+                      jjsonTextW.WritePropertyName('email');
+                      jjsonTextW.WriteValue(dmtFuncionarioemail.AsString);
+                  jjsonTextW.WriteEndObject;
 
-      mmJson.Text:=jjsonTextW.Writer.ToString;
+                  dmtFuncionario.Next;
+                end;
+                jjsonTextW.WriteEnd;
+
+          jjsonTextW.WriteEndObject;
+
+          mmJson.Text:=jjsonTextW.Writer.ToString;
+      except
+          showmessage('Erro ao gerar JSON.');
+      end;
     finally
       jjsonTextW.Free;
     end;
@@ -227,20 +242,12 @@ begin
      showmessage('Favor verificar os dados!');
      exit;
   end;
-  if incluiReg(edtid.Text,edtnome.Text,edtsalario.Text) then
+  if incluiReg(edtid.Text,edtnome.Text,edtsalario.Text,edtEmail.Text) then
   begin
       limpaEdit;
   end;
 end;
 
-function incluiReg(tid,tnome,tsalario:string):boolean;
-begin
-  try
-
-  except
-      result:=false;
-  end;
-end;
 
 procedure TfrmJson.FormCreate(Sender: TObject);
 begin
@@ -266,14 +273,14 @@ begin
     end;
 end;
 
-function TfrmJson.incluiReg(tid, tnome, tsalario: string): boolean;
+function TfrmJson.incluiReg(tid, tnome, tsalario, temail: string): boolean;
 begin
     try
          dmtFuncionario.Append;
          dmtFuncionario.FieldByName('id').Value:=tid;
          dmtFuncionario.FieldByName('nome').Value:=tnome;
          dmtFuncionario.FieldByName('salario').Value:=tsalario;
-         dmtFuncionario.FieldByName('email').Value:=tsalario;
+         dmtFuncionario.FieldByName('email').Value:=temail;
          dmtFuncionario.Post;
     except
           showmessage('Erro na inclusão da tabela.'+#13+'Campos ID e Salario devem ser numéricos.');

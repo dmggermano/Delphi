@@ -20,6 +20,10 @@ uses
 ///	</summary>
 procedure  salvaImagemDoForm(const sNomeArquivo: string; oForm : TForm);
 
+///	<summary>
+///	  Funcao para salvar arquivo texto: xnomeArquivo, xtexto a ser valvo e xpermiteExcluir se arquivo ja existe. retorna False se arquiva ja existe e nao foi excluido
+///	</summary>
+function salvaArquivoTXT(xnomeArquivo, xtexto, xpermiteExcluir:string ):boolean;
 
 implementation
 
@@ -70,6 +74,49 @@ begin
     Bitmap.Free;
   end;
 end;
+
+
+function salvaArquivoTXT(xnomeArquivo, xtexto, xpermiteExcluir:string ):boolean;
+var
+        f,ff:textfile;
+begin
+        result:=true;
+        if fileexists(xnomeArquivo)=true then
+        begin
+            if xpermiteExcluir='S' then
+            begin
+               try
+                  deletefile(xnomeArquivo)
+               except
+                     begin
+                        messagedlg('Não foi possivel excluir o arquivo.',mtInformation,[mbAbort],0);
+                        result:=false;
+                        exit;
+                     end;
+               end;
+            end
+            else
+            begin
+                messagedlg('Arquivo já existe!',mtInformation,[mbAbort],0);
+                result:=false;
+                exit;
+            end;
+        end;
+        try
+              assignfile(f,xnomeArquivo);
+              rewrite(f);
+              writeln(f,xtexto);
+              closefile(f);
+              messagedlg('Arquivo salvo com o nome:'+#13+#13+xnomeArquivo,mtConfirmation,[mbclose],0);
+        except
+               begin
+                  messagedlg('Não foi possível salvar o arquivo.',mtInformation,[mbAbort],0);
+                  result:=false;
+                  exit;
+               end;
+        end;
+end;
+
 
 
 end.
