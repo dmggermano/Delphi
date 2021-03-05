@@ -58,13 +58,10 @@
 * .dsk
 
 # Histórico e backups Delphi
-__history /
-__recovery /
-* . ~ *
+__history/
+__recovery/
+* .~*
 
 # Arquivo de estatísticas do Castalia (já que o XE7 Castalia é distribuído com Delphi)
 * .stat
 
-# Boss dependency manager vendor folder https://github.com/HashLoad/boss
-módulos /
-*.~1~
