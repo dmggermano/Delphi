@@ -4,7 +4,7 @@ interface
 
 uses
    Windows, Messages, SysUtils, Classes,  Controls,  Dialogs, Vcl.Forms,
-   Vcl.Imaging.jpeg, Vcl.Graphics;
+   Vcl.Imaging.jpeg, Vcl.Graphics,   IdHTTP, IdSSLOpenSSL;
 /// <summary>
 ///   pega o nome do usuario do windows
 /// </summary>
@@ -24,6 +24,11 @@ procedure  salvaImagemDoForm(const sNomeArquivo: string; oForm : TForm);
 ///	  Funcao para salvar arquivo texto: xnomeArquivo, xtexto a ser valvo e xpermiteExcluir se arquivo ja existe. retorna False se arquiva ja existe e nao foi excluido
 ///	</summary>
 function salvaArquivoTXT(xnomeArquivo, xtexto, xpermiteExcluir:string ):boolean;
+
+/// <summary>
+///   Busca endere pelo numero do CEP no correio
+/// </summary>
+function fBuscarPorCEP(cep:string):string;
 
 implementation
 
@@ -117,6 +122,38 @@ begin
         end;
 end;
 
+function fBuscarPorCEP(cep:string):string;
+const
+  _url = 'https://viacep.com.br/ws/';
+  _urlCompl = '/json/';
+var
+  txt:string;
+  xidhttp1: TIdHTTP;
+  xidSSL: TIdSSLIOHandlerSocketOpenSSL;
+  xjson: string;
 
+begin
+  txt:=_url+cep+_urlCompl;
+  xidHTTP1 := TIdHTTP.Create;
+  try
+    try
+      xidSSL := TIdSSLIOHandlerSocketOpenSSL.Create(nil);
+      xidSSL.SSLOptions.Method := sslvSSLv23;
+      xidSSL.SSLOptions.SSLVersions := [sslvTLSv1_2];
+
+      //criação do request para a API (necessário para atribuir  UserAgent)
+      xidHTTP1.Request.UserAgent := 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0';
+      xidHTTP1.IOHandler := xidSSL;
+
+      //popula o xjson com os dados da API
+      xjson := xIdHTTP1.Get(txt);
+    finally
+      xidSSL.Free;
+    end;
+  finally
+    xIdHTTP1.Free;
+  end;
+  result:=xjson;
+end;
 
 end.

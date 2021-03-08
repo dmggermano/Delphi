@@ -18,12 +18,14 @@ type
     StatusBar1: TStatusBar;
     tmrHora: TTimer;
     SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
     procedure Sada1Click(Sender: TObject);
     procedure tmrHoraTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure JSONteste1Click(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
   private
     procedure f_frmJson;
     { Private declarations }
@@ -38,7 +40,7 @@ implementation
 
 {$R *.dfm}
 
-uses ufuncoes, uJson;
+uses ufuncoes, uJson, ubuscaCEPJson;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
@@ -75,6 +77,14 @@ end;
 procedure TfrmPrincipal.SpeedButton1Click(Sender: TObject);
 begin
     f_frmJson;
+end;
+
+procedure TfrmPrincipal.SpeedButton2Click(Sender: TObject);
+begin
+        if (fBuscaCEP=nil) then
+        begin
+          application.CreateForm(tfBuscaCEP,fBuscaCEP);
+        end;
 end;
 
 procedure TfrmPrincipal.tmrHoraTimer(Sender: TObject);

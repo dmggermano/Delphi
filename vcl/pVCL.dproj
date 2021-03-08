@@ -100,6 +100,10 @@
             <Form>frmJson</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="ubuscaCEPJson.pas">
+            <Form>fBuscaCEP</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="ufuncoes.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
