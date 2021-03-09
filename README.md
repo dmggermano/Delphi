@@ -1,5 +1,6 @@
 # Delphi
-exemplos  de código: JSON
+Exemplos de código: JSON
 
-Criação e leitura
-utiliza a API viacep para exemplo
+Criação e leitura:
+* criação 3 formas diferentes
+* leitura utilizando a API viacep como exemplo
